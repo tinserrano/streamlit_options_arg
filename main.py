@@ -284,13 +284,13 @@ with st.spinner("Cargando datos de opciones..."):
         st.error(f"Error al cargar datos: {str(e)}")
         st.stop()
 
+with st.spinner("Buscando oportunidades..."):
+    df_strategies = find_strategies(df_merged)
+
 tab1, tab2, tab3 = st.tabs(["📈 Estrategias", "📊 Datos Completos", "ℹ️ Info"])
 
 with tab1:
     st.header("Estrategias Long Straddle y Strangle")
-    
-    with st.spinner("Buscando oportunidades..."):
-        df_strategies = find_strategies(df_merged)
     
     if not df_strategies.empty:
         col1, col2, col3 = st.columns(3)
@@ -355,8 +355,6 @@ with tab1:
         )
         
         st.subheader("📊 Visualizar Estrategia")
-        
-        original_indices = filtered_strategies.index.tolist()
         
         strategy_options = [
             f"#{idx} - {row['Tipo']} - {row['Stock']} - Call ${row['Strike Call']:.0f}/Put ${row['Strike Put']:.0f} - "
